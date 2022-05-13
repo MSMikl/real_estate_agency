@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Flat
+from .models import Flat, Like
 
 
 class FlatAdmin(admin.ModelAdmin):
@@ -17,4 +17,9 @@ class FlatAdmin(admin.ModelAdmin):
     list_filter = ['new_building']
 
 
+class LikeAdmin(admin.ModelAdmin):
+    raw_id_fields = ['user', 'flat']
+
+
 admin.site.register(Flat, FlatAdmin)
+admin.site.register(Like, LikeAdmin)
