@@ -7,11 +7,13 @@ from django.db import migrations
 def get_correct_number(apps, schema_editor):
     Flat = apps.get_model('property', 'Flat')
     for flat in Flat.objects.all():
-        flat.owner_pure_phone = phonenumbers.parse(
-            flat.owners_phonenumber,
-            'RU'
-        )
-        flat.save()
+        parsed_number = phonenumbers.parse(
+                flat.owners_phonenumber,
+                'RU'
+            )
+        if phonenumbers.is_valid_number(parsed_number):
+            flat.owner_pure_phone = parsed_number
+            flat.save()
 
 
 class Migration(migrations.Migration):
