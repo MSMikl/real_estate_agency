@@ -22,10 +22,10 @@ class LikeAdmin(admin.ModelAdmin):
     raw_id_fields = ['user', 'flat']
 
 
-class OrderAdmin(admin.ModelAdmin):
+class OwnerAdmin(admin.ModelAdmin):
     raw_id_fields = ['flats']
 
 
 admin.site.register(Flat, FlatAdmin)
 admin.site.register(Like, LikeAdmin)
-admin.site.register(Owner, OrderAdmin)
+admin.site.register(Owner, OwnerAdmin)
