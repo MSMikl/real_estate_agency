@@ -6,7 +6,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 
 class Flat(models.Model):
-    owner = models.CharField('ФИО владельца', max_length=200)
+    owner1 = models.CharField('ФИО владельца', max_length=200)
     owner_pure_phone = PhoneNumberField(
         'Нормализованный номер владельца',
         blank=True
@@ -79,3 +79,21 @@ class Like(models.Model):
 
     def __str__(self) -> str:
         return self.text.split(' ')[:3]
+
+
+class Owner(models.Model):
+    name = models.CharField('ФИО владельца', max_length=100)
+    phone = models.CharField('Номер телефона владельца', max_length=50)
+    pure_phone = PhoneNumberField(
+        'Нормализованный номер владельца',
+        blank=True
+    )
+    flats = models.ManyToManyField(
+        'Flat',
+        'owner',
+        verbose_name='Квартиры в собственности'
+    )
+
+
+    def __str__(self) -> str:
+        return self.name
