@@ -6,12 +6,6 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 
 class Flat(models.Model):
-    owner1 = models.CharField('ФИО владельца', max_length=200)
-    owner_pure_phone = PhoneNumberField(
-        'Нормализованный номер владельца',
-        blank=True
-    )
-    owners_phonenumber = models.CharField('Номер владельца', max_length=20)
     new_building = models.BooleanField(default=None, null=True)
     created_at = models.DateTimeField(
         'Когда создано объявление',
@@ -48,7 +42,7 @@ class Flat(models.Model):
         db_index=True)
 
     has_balcony = models.NullBooleanField('Наличие балкона', db_index=True)
-    active = models.BooleanField('Активно-ли объявление', db_index=True)
+    active = models.BooleanField('Активно ли объявление', db_index=True)
     construction_year = models.IntegerField(
         'Год постройки здания',
         null=True,
@@ -82,7 +76,7 @@ class Like(models.Model):
 
 
 class Owner(models.Model):
-    name = models.CharField('ФИО владельца', max_length=100)
+    name = models.CharField('ФИО владельца', max_length=100, db_index=True)
     phone = models.CharField('Номер телефона владельца', max_length=50)
     pure_phone = PhoneNumberField(
         'Нормализованный номер владельца',
@@ -91,7 +85,9 @@ class Owner(models.Model):
     flats = models.ManyToManyField(
         'Flat',
         'owner',
-        verbose_name='Квартиры в собственности'
+        verbose_name='Квартиры в собственности',
+        blank=True,
+        null=True
     )
 
     def __str__(self) -> str:
