@@ -47,7 +47,8 @@ class Flat(models.Model):
         'Год постройки здания',
         null=True,
         blank=True,
-        db_index=True)
+        db_index=True
+    )
 
     def __str__(self):
         return f'{self.town}, {self.address} ({self.price}р.)'
@@ -84,10 +85,9 @@ class Owner(models.Model):
     )
     flats = models.ManyToManyField(
         'Flat',
-        'owner',
+        related_name='owners',
         verbose_name='Квартиры в собственности',
-        blank=True,
-        null=True
+        blank=True
     )
 
     def __str__(self) -> str:
