@@ -2,18 +2,26 @@
 import phonenumbers
 
 from django.db import migrations
+from django.db.models import F
 
 
 def get_correct_number(apps, schema_editor):
-    Flat = apps.get_model('property', 'Flat')
-    for flat in Flat.objects.all():
+    def parse_number(raw_number):
         parsed_number = phonenumbers.parse(
-                flat.owners_phonenumber,
+                raw_number,
                 'RU'
             )
         if phonenumbers.is_valid_number(parsed_number):
-            flat.owner_pure_phone = parsed_number
-            flat.save()
+            return parsed_number
+
+    Flat = apps.get_model('property', 'Flat')
+    Flat.objects.update(
+        owner_pure_phone=parse_number(
+            F( 
+                'owners_phonenumber'
+                )
+            )
+        )
 
 
 class Migration(migrations.Migration):
