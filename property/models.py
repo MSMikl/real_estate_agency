@@ -59,24 +59,26 @@ class Flat(models.Model):
     likes = models.ManyToManyField(
         User,
         verbose_name='Кто лайкнул',
+        related_name='flats_liked',
         blank=True
     )
-    
+
     def __str__(self):
         return f'{self.town}, {self.address} ({self.price}р.)'
-
 
 
 class Like(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        verbose_name='Кто жаловался'
+        verbose_name='Кто жаловался',
+        related_name='complains'
     )
     flat = models.ForeignKey(
         Flat,
         on_delete=models.CASCADE,
-        verbose_name='Квартира, на которую жаловались'
+        verbose_name='Квартира, на которую жаловались',
+        related_name='complains'
     )
     text = models.TextField('Текст жалобы', max_length=1000, blank=True)
 
