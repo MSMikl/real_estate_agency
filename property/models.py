@@ -80,7 +80,7 @@ class Like(models.Model):
         verbose_name='Квартира, на которую жаловались',
         related_name='complains'
     )
-    text = models.TextField('Текст жалобы', max_length=1000, blank=True)
+    text = models.TextField('Текст жалобы', blank=True)
 
     def __str__(self) -> str:
         return self.text.split(' ')[:3]
